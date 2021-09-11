@@ -31,6 +31,7 @@ class Solandra {
     canvas.drawPath(path, fillPaint);
   }
 
+  // hmmm, want to let people save typing with SPath, but this doesn't feel ideal
   drawS(SPath path) {
     draw(path.path);
   }
@@ -74,5 +75,48 @@ class Solandra {
 
   double randomAngle() {
     return _rng.nextDouble() * pi * 2;
+  }
+
+  // Want to be able to use same seed for standard operations (so duplicating out of box stuff)
+  double random() {
+    return _rng.nextDouble();
+  }
+
+  int randomInt(int max) {
+    return _rng.nextInt(max);
+  }
+
+  bool randomBool() {
+    return _rng.nextBool();
+  }
+
+  double gaussian({double mean = 0, double sd = 1}) {
+    final a = _rng.nextDouble();
+    final b = _rng.nextDouble();
+    final n = sqrt(-2.0 * log(a)) * cos(2.0 * pi * b);
+    return mean + n * sd;
+  }
+
+  int poisson(int lambda) {
+    final limit = exp(-lambda);
+    double prod = _rng.nextDouble();
+    int n = 0;
+    while (prod >= limit) {
+      n++;
+      prod *= _rng.nextDouble();
+    }
+    return n;
+  }
+
+  T sample<T>(List<T> items) {
+    return items[randomInt(items.length)];
+  }
+
+  List<T> samples<T>(List<T> items, int count) {
+    List<T> result = List.empty();
+    for (int i = 0; i < count; i++) {
+      result.add(sample(items));
+    }
+    return result;
   }
 }

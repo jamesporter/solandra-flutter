@@ -23,3 +23,15 @@ extension PointHelpersD on Point<double> {
 
   double dot(Point<double> other) => x * other.x + y * other.y;
 }
+
+extension CentroidCalc on Iterable<Point<double>> {
+  Point<double> get centroid {
+    Point<double> p = Point<double>(0, 0);
+    for (final el in this) {
+      p += el;
+    }
+    int n = length;
+    if (n == 0) n = 1;
+    return Point(p.x / n, p.y / n);
+  }
+}
