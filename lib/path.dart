@@ -45,7 +45,7 @@ class CubicEdge extends PathEdge {
     required this.curveAngle,
     required this.bulbousness,
     required this.twist,
-  })
+  });
 
   @override
   void addToPath(Path path) {
@@ -69,20 +69,19 @@ class CubicEdge extends PathEdge {
   @override
   PathEdge transformed(Point<double> Function(Point<double>) transform) {
     return CubicEdge(
-      from: transform(from),
-      to: transform(to),
-      positive: positive,
-      curveAngle: curveAngle,
-      curveSize: curveSize,
-      bulbousness: bulbousness,
-      twist: twist
-    );
+        from: transform(from),
+        to: transform(to),
+        positive: positive,
+        curveAngle: curveAngle,
+        curveSize: curveSize,
+        bulbousness: bulbousness,
+        twist: twist);
   }
 }
 
 /// A higher level Path class; allows both building and manipulation of paths, prior to drawing
 class SPath {
-  List<PathEdge> edges = List.empty();
+  List<PathEdge> edges = <PathEdge>[];
   late Point<double> currentPoint;
 
   SPath(Point<double> start) {
@@ -111,6 +110,10 @@ class SPath {
         twist: twist,
         positive: positive));
     currentPoint = to;
+  }
+
+  close() {
+    line(to: edges[0].start);
   }
 
   Path get path {

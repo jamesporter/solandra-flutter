@@ -40,14 +40,14 @@ class Solandra {
     fill(path.path);
   }
 
-  background(double h, double s, double v, {double a = 1.0}) {
+  background(double h, double s, double v, {double a = 100}) {
     Paint paint = Paint()
       ..color = fromHSVA(h, s, v, a)
       ..style = PaintingStyle.fill;
     canvas.drawRect(size.rect, paint);
   }
 
-  setFillColor(double h, double s, double v, {double a = 1.0}) {
+  setFillColor(double h, double s, double v, {double a = 100}) {
     fillPaint.color = fromHSVA(h, s, v, a);
   }
 
@@ -113,7 +113,7 @@ class Solandra {
   }
 
   List<T> samples<T>(List<T> items, int count) {
-    List<T> result = List.empty();
+    List<T> result = <T>[];
     for (int i = 0; i < count; i++) {
       result.add(sample(items));
     }
