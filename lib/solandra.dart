@@ -1,6 +1,7 @@
 library solandra;
 
 import 'package:flutter/widgets.dart';
+import 'package:solandra/drawables.dart';
 import 'package:solandra/path.dart';
 import 'package:solandra/util/data.dart';
 import 'util/color.dart';
@@ -40,6 +41,15 @@ class Solandra {
     fill(path.path);
   }
 
+  // hmmm, again ...
+  drawD(Drawable drawable) {
+    drawable.draw(canvas, strokePaint);
+  }
+
+  fillD(Drawable drawable) {
+    drawable.draw(canvas, fillPaint);
+  }
+
   background(double h, double s, double v, {double a = 100}) {
     Paint paint = Paint()
       ..color = fromHSVA(h, s, v, a)
@@ -68,7 +78,7 @@ class Solandra {
     _rng = Random(newSeed);
   }
 
-  Point randomPoint() {
+  Point<double> randomPoint() {
     return Point(
         _rng.nextDouble() * size.width, _rng.nextDouble() * size.height);
   }
