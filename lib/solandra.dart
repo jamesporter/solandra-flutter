@@ -20,9 +20,11 @@ class Solandra {
     ..color = const Color.fromARGB(255, 0, 0, 0)
     ..style = PaintingStyle.stroke;
 
-  Random _rng = Random(0);
+  late Random _rng;
 
-  Solandra(this.canvas, this.size);
+  Solandra(this.canvas, this.size, {int seed = 0}) {
+    _rng = Random(seed);
+  }
 
   draw(Path path) {
     canvas.drawPath(path, strokePaint);
