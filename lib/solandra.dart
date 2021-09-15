@@ -34,16 +34,8 @@ class Solandra {
     canvas.drawPath(path, fillPaint);
   }
 
-  // hmmm, want to let people save typing with SPath, but this doesn't feel ideal
-  drawS(SPath path) {
-    draw(path.path);
-  }
-
-  fillS(SPath path) {
-    fill(path.path);
-  }
-
-  // hmmm, again ...
+  // don't like naming... in Dart can't repeat, this would be used commonly to want to be concise
+  // could extend Path to be drawable to only have a pair of methods, but would people need to import?
   drawD(Drawable drawable) {
     drawable.draw(canvas, strokePaint);
   }

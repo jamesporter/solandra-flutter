@@ -1,5 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
+import 'package:solandra/drawables.dart';
+
 import 'util/convenience.dart';
 
 abstract class PathEdge {
@@ -80,7 +82,7 @@ class CubicEdge extends PathEdge {
 }
 
 /// A higher level Path class; allows both building and manipulation of paths, prior to drawing
-class SPath {
+class SPath implements Drawable {
   List<PathEdge> edges = <PathEdge>[];
   late Point<double> currentPoint;
 
@@ -147,6 +149,11 @@ class SPath {
   SPath rotated(double angle) {
     final c = centroid;
     return transformed((pt) => c + (pt - c).rotate(angle));
+  }
+
+  @override
+  draw(Canvas canvas, Paint paint) {
+    canvas.drawPath(path, paint);
   }
 
   // TODO fill out more from https://github.com/jamesporter/solandra/blob/master/src/lib/paths/Path.ts plus maybe some new things?

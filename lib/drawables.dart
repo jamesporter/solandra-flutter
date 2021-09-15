@@ -6,17 +6,6 @@ abstract class Drawable {
   draw(Canvas canvas, Paint paint);
 }
 
-/// Subclass this to create Drawables from flexible paths
-abstract class SPathDrawable extends Drawable {
-  // TODO is this pointless... surely could just implement Drawable for SPath???
-  Path get path;
-
-  @override
-  draw(Canvas canvas, Paint paint) {
-    canvas.drawPath(path, paint);
-  }
-}
-
 class DRect extends Drawable {
   // TODO want to support position as center and TL
   Point<double> position;
@@ -28,5 +17,24 @@ class DRect extends Drawable {
   draw(Canvas canvas, Paint paint) {
     canvas.drawRect(
         Rect.fromLTWH(position.x, position.y, size.width, size.height), paint);
+  }
+}
+
+class DEllipse extends Drawable {
+  Point<double> position;
+  late Size size;
+
+  DEllipse(this.position, this.size);
+
+  DEllipse.circle(this.position, double radius) {
+    size = Size(radius, radius);
+  }
+
+  @override
+  draw(Canvas canvas, Paint paint) {
+    canvas.drawOval(
+        Rect.fromLTWH(position.x - size.width / 2, position.y - size.height / 2,
+            size.width, size.height),
+        paint);
   }
 }
