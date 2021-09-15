@@ -1,53 +1,59 @@
 import 'dart:ui';
 
-/// Creates a Color from HSV Conversion formula
+/// Creates a Color from HSL Conversion formula
 /// adapted from http://en.wikipedia.org/wiki/HSV_color_space.
 /// Assumes h in [0, 360]
-/// s, v and a are in [0, 100]
+/// s, l and a are in [0, 100]
 ///
-fromHSVA(double h, double s, double v, double a) {
+fromHSVA(double h, double s, double l, double a) {
   double r = 0;
   double g = 0;
   double b = 0;
 
-  int i = (h / 60).floor();
-  double f = (h / 60) - i;
-  double p = (v / 100) * (1 - (s / 100));
-  double q = (v / 100) * (1 - f * (s / 100));
-  double t = (v / 100) * (1 - (1 - f) * (s / 100));
+  final chroma = (1 - (2 * l / 100 - 1).abs()) * (s / 100);
+  // Take % 360 for wrap around on hue... not really defined but I think in most cases best approach?
+
+  final hDash = (h % 360) / 60;
+  final i = hDash.floor();
+  final x = chroma * (1 - (hDash % 2 - 1).abs());
 
   switch (i % 6) {
     case 0:
-      r = v;
-      g = t;
-      b = p;
+      r = chroma;
+      g = x;
+      b = 0;
       break;
     case 1:
-      r = q;
-      g = v;
-      b = p;
+      r = x;
+      g = chroma;
+      b = 0;
       break;
     case 2:
-      r = p;
-      g = v;
-      b = t;
+      r = 0;
+      g = chroma;
+      b = x;
       break;
     case 3:
-      r = p;
-      g = q;
-      b = v;
+      r = 0;
+      g = x;
+      b = chroma;
       break;
     case 4:
-      r = t;
-      g = p;
-      b = v;
+      r = x;
+      g = 0;
+      b = chroma;
       break;
     case 5:
-      r = v;
-      g = p;
-      b = q;
+      r = chroma;
+      g = 0;
+      b = x;
       break;
   }
+  final m = (l / 100) - chroma / 2;
+
+  r += m;
+  g += m;
+  b += m;
 
   return Color.fromARGB(((a * 255) / 100).floor(), (r * 255).floor(),
       (g * 255).floor(), (b * 255).floor());

@@ -26,6 +26,12 @@ class Solandra {
     _rng = Random(seed);
   }
 
+  clipped() {
+    canvas.clipRect(size.rect);
+  }
+
+  double get aspectRatio => size.width / size.height;
+
   draw(Path path) {
     canvas.drawPath(path, strokePaint);
   }
@@ -44,22 +50,24 @@ class Solandra {
     drawable.draw(canvas, fillPaint);
   }
 
-  background(double h, double s, double v, {double a = 100}) {
+  background(double h, double s, double v, [double a = 100]) {
     Paint paint = Paint()
       ..color = fromHSVA(h, s, v, a)
       ..style = PaintingStyle.fill;
     canvas.drawRect(size.rect, paint);
   }
 
-  setFillColor(double h, double s, double v, {double a = 100}) {
+  setFillColor(double h, double s, double v, [double a = 100]) {
     fillPaint.color = fromHSVA(h, s, v, a);
   }
 
-  setStrokeColor(double h, double s, double v, {double a = 1.0}) {
+  setStrokeColor(double h, double s, double v, [double a = 1.0]) {
     strokePaint.color = fromHSVA(h, s, v, a);
   }
 
-  withFrame(Function(Area area) callback, {double? margin}) {
+  // Canvas aware Iteration
+
+  forFrame({required Function(Area area) callback, double? margin}) {
     if (margin != null) {
       // TODO! (use the eventual tiling stuff for this)
     } else {
@@ -67,6 +75,50 @@ class Solandra {
           const Point(0, 0), size, Point(size.width / 2, size.height / 2), 0));
     }
   }
+
+  forTiling(
+      {required int n,
+      bool square = true,
+      double margin = 0,
+      bool columnFirst = true,
+      required Function(Area area) callback}) {
+    if (n < 1) throw Exception("Must be positive n");
+    var k = 0;
+
+    final marginSize = margin * size.width;
+    final nY = square ? (n * (1 / aspectRatio)).floor() : n;
+    final deltaX = (size.width - marginSize * 2) / n;
+    final hY = square ? deltaX * nY : size.height - 2 * marginSize;
+    final deltaY = hY / nY;
+    final sX = marginSize;
+    final sY = (size.height - hY) / 2;
+
+    if (columnFirst) {
+      for (var i = 0; i < n; i++) {
+        for (var j = 0; j < nY; j++) {
+          callback(Area(
+              Point(sX + i * deltaX, sY + j * deltaY),
+              Size(deltaX, deltaY),
+              Point(sX + i * deltaX + deltaX / 2, sY + j * deltaY + deltaY / 2),
+              k));
+          k++;
+        }
+      }
+    } else {
+      for (var j = 0; j < nY; j++) {
+        for (var i = 0; i < n; i++) {
+          callback(Area(
+              Point(sX + i * deltaX, sY + j * deltaY),
+              Size(deltaX, deltaY),
+              Point(sX + i * deltaX + deltaX / 2, sY + j * deltaY + deltaY / 2),
+              k));
+          k++;
+        }
+      }
+    }
+  }
+
+  // RNG
 
   set seed(int newSeed) {
     _rng = Random(newSeed);

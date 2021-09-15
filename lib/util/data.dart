@@ -2,9 +2,9 @@ import 'dart:math';
 import 'package:flutter/painting.dart';
 
 class Area {
-  Point origin;
+  Point<double> origin;
   Size delta;
-  Point center;
+  Point<double> center;
   int index;
 
   Area(this.origin, this.delta, this.center, this.index);
