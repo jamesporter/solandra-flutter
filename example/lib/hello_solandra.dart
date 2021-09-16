@@ -26,7 +26,7 @@ class ExampleOne extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Solandra Demos")),
+        appBar: AppBar(title: const Text("Simple Drawing")),
         body: CustomPaint(painter: ExampleOnePainter(), child: Container()));
   }
 }

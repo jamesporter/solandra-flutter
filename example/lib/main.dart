@@ -1,4 +1,5 @@
 import 'package:example/hello_solandra.dart';
+import 'package:example/hello_solandra_three.dart';
 import 'package:example/hello_solandra_two.dart';
 import 'package:example/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,8 @@ class MyApp extends StatelessWidget {
       routes: {
         "/": (_) => HomeScreen(),
         "/1": (_) => ExampleOne(),
-        "/2": (_) => ExampleTwo()
+        "/2": (_) => ExampleTwo(),
+        "/3": (_) => ExampleThree()
       },
       // showPerformanceOverlay: true,
       debugShowCheckedModeBanner: false,
