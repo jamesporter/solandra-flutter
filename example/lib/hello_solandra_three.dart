@@ -38,7 +38,7 @@ class ExampleThree extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Tiling")),
+      appBar: AppBar(title: const Text("Simple Animation")),
       body: TweenAnimationBuilder(
           tween: Tween<double>(begin: 0, end: 3600 * 60),
           duration: const Duration(seconds: 3600),

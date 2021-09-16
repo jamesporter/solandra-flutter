@@ -1,4 +1,5 @@
 import 'package:example/hello_solandra.dart';
+import 'package:example/hello_solandra_four.dart';
 import 'package:example/hello_solandra_three.dart';
 import 'package:example/hello_solandra_two.dart';
 import 'package:example/home_screen.dart';
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
         "/": (_) => HomeScreen(),
         "/1": (_) => ExampleOne(),
         "/2": (_) => ExampleTwo(),
-        "/3": (_) => ExampleThree()
+        "/3": (_) => ExampleThree(),
+        "/4": (_) => ExampleFour()
       },
       // showPerformanceOverlay: true,
       debugShowCheckedModeBanner: false,

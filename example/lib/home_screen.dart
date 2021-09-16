@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
                   child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: Text("Example ${idx + 1}")));
-            }, childCount: 3))
+            }, childCount: 4))
           ],
         ));
   }

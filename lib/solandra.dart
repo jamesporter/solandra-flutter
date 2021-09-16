@@ -275,4 +275,30 @@ class Solandra {
     //fallback *should never happen!*
     return cases[0].callback();
   }
+
+  Point<double> perturb(
+      {required Point<double> at, required double magnitude}) {
+    return Point(
+      at.x + magnitude * (random() - 0.5),
+      at.y + magnitude * (random() - 0.5),
+    );
+  }
+
+  /// Shuffle a List, importantly uses same RNG as other random code.
+  List<T> shuffle<T>(List<T> items) {
+    var currentIndex = items.length;
+    late T temporaryValue;
+    var randomIndex = 0;
+
+    while (0 != currentIndex) {
+      randomIndex = (random() * currentIndex).floor();
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = items[currentIndex];
+      items[currentIndex] = items[randomIndex];
+      items[randomIndex] = temporaryValue;
+    }
+    return items;
+  }
 }

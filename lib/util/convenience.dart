@@ -3,6 +3,8 @@ import 'dart:ui';
 
 extension SizeHelpers on Size {
   Rect get rect => const Offset(0, 0) & this;
+  double get magnitude => sqrt(width * width + height * height);
+  double get minimum => min(width, height);
 }
 
 extension PointHelpers<T extends num> on Point<T> {
