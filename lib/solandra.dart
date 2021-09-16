@@ -2,7 +2,6 @@ library solandra;
 
 import 'package:flutter/widgets.dart';
 import 'package:solandra/drawables.dart';
-import 'package:solandra/path.dart';
 import 'package:solandra/util/data.dart';
 import 'util/color.dart';
 import 'package:flutter/painting.dart';
@@ -31,6 +30,9 @@ class Solandra {
   }
 
   double get aspectRatio => size.width / size.height;
+  double get width => size.width;
+  double get height => size.height;
+  Point<double> get center => Point(size.width / 2, size.height / 2);
 
   draw(Path path) {
     canvas.drawPath(path, strokePaint);
@@ -69,7 +71,7 @@ class Solandra {
 
   forFrame({required Function(Area area) callback, double? margin}) {
     if (margin != null) {
-      // TODO! (use the eventual tiling stuff for this)
+      forTiling(n: 1, square: false, callback: callback);
     } else {
       callback(Area(
           const Point(0, 0), size, Point(size.width / 2, size.height / 2), 0));
@@ -115,6 +117,78 @@ class Solandra {
           k++;
         }
       }
+    }
+  }
+
+  void forHorizontal(
+      {required int n,
+      double margin = 0.0,
+      required Function(Area area) callback}) {
+    final sX = margin * width;
+    final eX = (1 - margin) * width;
+    final sY = sX;
+    final dY = height - 2 * sY;
+    final dX = (eX - sX) / n;
+
+    for (var i = 0; i < n; i++) {
+      callback(Area(Point(sX + i * dX, sY), Size(dX, dY),
+          Point(sX + i * dX + dX / 2, sY + dY / 2), i));
+    }
+  }
+
+  void forVertical(
+      {required int n,
+      double margin = 0.0,
+      required Function(Area area) callback}) {
+    final sX = margin * width;
+    final eY = (1 - margin) * width;
+    final sY = sX;
+    final dX = width - 2 * sX;
+    final dY = (eY - sY) / n;
+
+    for (var i = 0; i < n; i++) {
+      callback(Area(Point(sX, sY + i * dY), Size(dX, dY),
+          Point(sX + dX / 2, sY + i * dY + dY / 2), i));
+    }
+  }
+
+  forGrid(
+      {int minX = 0,
+      required int maxX,
+      int minY = 0,
+      required int maxY,
+      bool columnFirst = true,
+      required Function(Point<int> point, int index) callback}) {
+    var k = 0;
+    if (columnFirst) {
+      for (var i = minX; i <= maxX; i++) {
+        for (var j = minY; j <= maxY; j++) {
+          callback(Point(i, j), k);
+          k++;
+        }
+      }
+    } else {
+      for (var j = minY; j <= maxY; j++) {
+        for (var i = minX; i <= maxX; i++) {
+          callback(Point(i, j), k);
+          k++;
+        }
+      }
+    }
+  }
+
+  aroundCircle(
+      {Point<double>? at,
+      required double radius,
+      required int n,
+      required Function(Point<double>, int) callback}) {
+    final dA = (pi * 2) / n;
+    var a = -pi * 0.5;
+    Point<double> c = at ?? center;
+    for (var i = 0; i < n; i++) {
+      callback(
+          Point(c.x + radius * cos(a + dA), c.y + radius * sin(a + dA)), i);
+      a += dA;
     }
   }
 
@@ -174,5 +248,31 @@ class Solandra {
       result.add(sample(items));
     }
     return result;
+  }
+
+  doProportion(double proportion, Function() callback) {
+    if (random() < proportion) callback();
+  }
+
+  /// Give a bunch of cases, do one with probabilty in proportion to proportion given.
+  ///
+  /// NB this is unlikely to be the most efficient way to do this when you iterate over it many times
+  proportionately(List<Case> cases) {
+    final total = cases
+        .map((c) => c.proportion)
+        .reduce((value, element) => value + element);
+    if (total <= 0) throw Exception("Must be positive total");
+
+    var r = random() * total;
+
+    for (var i = 0; i < cases.length; i++) {
+      if (cases[i].proportion > r) {
+        return cases[i].callback();
+      } else {
+        r -= cases[i].proportion;
+      }
+    }
+    //fallback *should never happen!*
+    return cases[0].callback();
   }
 }

@@ -9,3 +9,10 @@ class Area {
 
   Area(this.origin, this.delta, this.center, this.index);
 }
+
+class Case {
+  double proportion;
+  Function() callback;
+
+  Case(this.proportion, this.callback);
+}
