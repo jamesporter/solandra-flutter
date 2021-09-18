@@ -15,18 +15,27 @@ class ExampleSixPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final sol = Solandra(canvas, size);
     sol.clipped();
-    sol.background(45, 40, 90);
+    sol.background(45, 30, 95);
 
-    final path = SPath(sol.center);
+    sol.forTiling(
+        n: 5,
+        margin: 0.1,
+        square: false,
+        callback: (area) {
+          final path = SPath(sol.center);
 
-    times(100, (_) {
-      path.line(to: sol.randomPoint());
-    });
+          times(48, (_) {
+            path.line(to: sol.randomPoint());
+          });
 
-    final curve = path.chaikin(n: 4);
-    sol.setFillColor(150, 80, 70, 20);
-    sol.fillD(curve);
-    sol.drawD(curve);
+          final curve = path
+              .scaled(area.delta.width / size.width)
+              .moved(sol.center - area.center)
+              .chaikin(n: 3);
+          sol.setFillColor(150 + area.index * 5, 80, 70, 20);
+          sol.fillD(curve);
+          sol.drawD(curve);
+        });
   }
 
   @override
