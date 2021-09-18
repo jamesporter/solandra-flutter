@@ -47,6 +47,13 @@ class ExampleFour extends HookWidget {
       appBar: AppBar(title: const Text("Circular Animation")),
       body: Container(
           child: Column(children: [
+        Slider(
+            value: parameter.value,
+            onChanged: (newValue) {
+              parameter.value = newValue;
+            },
+            min: 0,
+            max: 360),
         Expanded(
             child: TweenAnimationBuilder(
                 tween: Tween<double>(begin: 0, end: 3600 * 60),
@@ -55,14 +62,7 @@ class ExampleFour extends HookWidget {
                   return CustomPaint(
                       painter: ExampleFourPainter(value, parameter.value),
                       child: Container());
-                })),
-        Slider(
-            value: parameter.value,
-            onChanged: (newValue) {
-              parameter.value = newValue;
-            },
-            min: 0,
-            max: 360)
+                }))
       ])),
     );
   }

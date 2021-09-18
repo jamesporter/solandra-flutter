@@ -5,7 +5,7 @@ import 'dart:ui';
 /// Assumes h in [0, 360]
 /// s, l and a are in [0, 100]
 ///
-fromHSVA(double h, double s, double l, double a) {
+fromHSLA(double h, double s, double l, double a) {
   double r = 0;
   double g = 0;
   double b = 0;

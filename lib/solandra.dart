@@ -52,19 +52,19 @@ class Solandra {
     drawable.draw(canvas, fillPaint);
   }
 
-  background(double h, double s, double v, [double a = 100]) {
+  background(double h, double s, double l, [double a = 100]) {
     Paint paint = Paint()
-      ..color = fromHSVA(h, s, v, a)
+      ..color = fromHSLA(h, s, l, a)
       ..style = PaintingStyle.fill;
     canvas.drawRect(size.rect, paint);
   }
 
-  setFillColor(double h, double s, double v, [double a = 100]) {
-    fillPaint.color = fromHSVA(h, s, v, a);
+  setFillColor(double h, double s, double l, [double a = 100]) {
+    fillPaint.color = fromHSLA(h, s, l, a);
   }
 
-  setStrokeColor(double h, double s, double v, [double a = 1.0]) {
-    strokePaint.color = fromHSVA(h, s, v, a);
+  setStrokeColor(double h, double s, double l, [double a = 1.0]) {
+    strokePaint.color = fromHSLA(h, s, l, a);
   }
 
   // Canvas aware Iteration
