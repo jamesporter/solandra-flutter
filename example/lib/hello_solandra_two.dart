@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:solandra/path.dart';
 import 'package:solandra/solandra.dart';
-import 'package:solandra/drawables.dart';
 
 class ExampleTwoPainter extends CustomPainter {
   bool columnFirst;
@@ -19,7 +19,7 @@ class ExampleTwoPainter extends CustomPainter {
         columnFirst: columnFirst,
         callback: (area) {
           sol.setFillColor(area.index.toDouble(), 70, 40);
-          sol.fillD(DRect(area.origin, area.delta));
+          sol.fill(SPath.rect(at: area.origin, size: area.delta));
         });
   }
 

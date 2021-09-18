@@ -5,8 +5,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:solandra/iteration.dart';
 import 'package:solandra/path.dart';
 import 'package:solandra/solandra.dart';
-import 'package:solandra/drawables.dart';
-import 'package:solandra/util/convenience.dart';
 
 class ExampleSixPainter extends CustomPainter {
   ExampleSixPainter();
@@ -33,8 +31,8 @@ class ExampleSixPainter extends CustomPainter {
               .moved(sol.center - area.center)
               .chaikin(n: 3);
           sol.setFillColor(150 + area.index * 5, 80, 70, 20);
-          sol.fillD(curve);
-          sol.drawD(curve);
+          sol.fill(curve);
+          sol.draw(curve);
         });
   }
 

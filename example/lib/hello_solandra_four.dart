@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:solandra/iteration.dart';
 import 'package:solandra/solandra.dart';
-import 'package:solandra/drawables.dart';
-import 'package:solandra/util/convenience.dart';
 
 class ExampleFourPainter extends CustomPainter {
   double animatedValue;
@@ -26,8 +24,8 @@ class ExampleFourPainter extends CustomPainter {
           radius: size.minimum / 2.4 - i * size.minimum / 6,
           n: 24 - i * 8,
           callback: (pt, j) {
-            sol.fillD(DEllipse.circle(
-                pt, baseR * (2 + cos(j + animatedValue / 40)) / 2));
+            canvas.drawCircle(pt.offset,
+                baseR * (1 + cos(j + animatedValue / 40) / 2), sol.fillPaint);
           });
     });
   }

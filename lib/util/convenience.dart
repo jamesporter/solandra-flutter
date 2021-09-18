@@ -5,6 +5,7 @@ extension SizeHelpers on Size {
   Rect get rect => const Offset(0, 0) & this;
   double get magnitude => sqrt(width * width + height * height);
   double get minimum => min(width, height);
+  Point<double> get point => Point(width, height);
 }
 
 extension PointHelpers<T extends num> on Point<T> {
@@ -24,6 +25,8 @@ extension PointHelpersD on Point<double> {
   }
 
   double dot(Point<double> other) => x * other.x + y * other.y;
+
+  Offset get offset => Offset(x, y);
 }
 
 extension CentroidCalc on Iterable<Point<double>> {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:solandra/iteration.dart';
 import 'package:solandra/solandra.dart';
-import 'package:solandra/drawables.dart';
 
 class ExampleOnePainter extends CustomPainter {
   @override
@@ -11,8 +10,10 @@ class ExampleOnePainter extends CustomPainter {
     sol.background(100, 1, 90);
     times(32, (_) {
       sol.setFillColor(sol.sample([190, 210, 220]), 80, 50, 50);
-      sol.fillD(DEllipse.circle(sol.randomPoint(),
-          sol.gaussian(sd: size.width / 12, mean: size.width / 2)));
+      canvas.drawCircle(
+          sol.randomPoint().offset,
+          sol.gaussian(sd: size.width / 12, mean: size.width / 8),
+          sol.fillPaint);
     });
   }
 

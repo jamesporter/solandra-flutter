@@ -1,12 +1,23 @@
 library solandra;
 
 import 'package:flutter/widgets.dart';
-import 'package:solandra/drawables.dart';
-import 'package:solandra/util/data.dart';
-import 'util/color.dart';
 import 'package:flutter/painting.dart';
 import 'dart:math';
+
+// Imported but not exported (might change?)
+import 'util/color.dart';
+
+// Main parts of library, all exported
+import 'path.dart';
+import 'util/data.dart';
 import 'util/convenience.dart';
+
+export 'path.dart';
+export 'util/data.dart';
+export 'util/convenience.dart';
+
+// Exported, though not used in this file
+export 'iteration.dart';
 
 class Solandra {
   Canvas canvas;
@@ -34,22 +45,20 @@ class Solandra {
   double get height => size.height;
   Point<double> get center => Point(size.width / 2, size.height / 2);
 
-  draw(Path path) {
+  drawPath(Path path) {
     canvas.drawPath(path, strokePaint);
   }
 
-  fill(Path path) {
+  fillPath(Path path) {
     canvas.drawPath(path, fillPaint);
   }
 
-  // don't like naming... in Dart can't repeat, this would be used commonly to want to be concise
-  // could extend Path to be drawable to only have a pair of methods, but would people need to import?
-  drawD(Drawable drawable) {
-    drawable.draw(canvas, strokePaint);
+  draw(SPath path) {
+    path.draw(canvas, strokePaint);
   }
 
-  fillD(Drawable drawable) {
-    drawable.draw(canvas, fillPaint);
+  fill(SPath path) {
+    path.draw(canvas, fillPaint);
   }
 
   background(double h, double s, double l, [double a = 100]) {

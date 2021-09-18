@@ -5,8 +5,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:solandra/iteration.dart';
 import 'package:solandra/path.dart';
 import 'package:solandra/solandra.dart';
-import 'package:solandra/drawables.dart';
-import 'package:solandra/util/convenience.dart';
 
 class ExampleFivePainter extends CustomPainter {
   double controlValue;
@@ -43,16 +41,17 @@ class ExampleFivePainter extends CustomPainter {
 
     path.exploded(magnitude: controlValue2).forEach((p) {
       sol.setFillColor(180 + sol.gaussian(sd: 40), 90, 50, 50);
-      sol.fillD(p);
+      sol.fill(p);
 
       p.exploded(magnitude: controlValue2).forEach((q) {
         sol.setFillColor(180 + sol.gaussian(sd: 40), 90, 50, 50);
-        sol.fillD(q.rotated(controlValue / 2));
-        sol.drawD(q);
+        sol.fill(q.rotated(controlValue / 2));
+        sol.draw(q);
       });
 
       sol.setFillColor(0, 0, 100);
-      sol.fillD(DEllipse.circle(p.centroid, 10));
+      // Note the more verbose of Flutter built in stuff; don't totally like, but the think I did felt too special case
+      canvas.drawCircle(p.centroid.offset, 10, sol.fillPaint);
     });
   }
 

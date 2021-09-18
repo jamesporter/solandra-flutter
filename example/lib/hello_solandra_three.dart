@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:solandra/iteration.dart';
 import 'package:solandra/solandra.dart';
-import 'package:solandra/drawables.dart';
 
 class ExampleThreePainter extends CustomPainter {
   double animatedValue;
@@ -19,12 +18,13 @@ class ExampleThreePainter extends CustomPainter {
 
     times(24, (i) {
       sol.setFillColor(210, 70, 40, sol.gaussian(sd: 3, mean: 10));
-      sol.fillD(DEllipse.circle(
-          sol.randomPoint(),
+      canvas.drawCircle(
+          sol.randomPoint().offset,
           32 +
               32 *
                   cos(animatedValue / 100 + i).abs() *
-                  sol.gaussian(sd: 5, mean: 20)));
+                  sol.gaussian(sd: 5, mean: 20),
+          sol.fillPaint);
     });
   }
 

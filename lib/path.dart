@@ -1,7 +1,5 @@
 import 'dart:math';
 import 'dart:ui';
-import 'package:solandra/drawables.dart';
-
 import 'util/convenience.dart';
 
 abstract class PathEdge {
@@ -321,6 +319,25 @@ class SPath implements Drawable {
       r += rate * dA;
       a += dA;
       line(to: at + Point(r * cos(a), r * sin(a)));
+    }
+  }
+
+  SPath.rect(
+      {required Point<double> at, required Size size, bool centered = false}) {
+    if (centered) {
+      final dX = size.width / 2;
+      final dY = size.height / 2;
+      currentPoint = at + Point(-dX, -dY);
+      line(to: at + Point(dX, -dY));
+      line(to: at + Point(dX, dY));
+      line(to: at + Point(-dX, dY));
+      close();
+    } else {
+      currentPoint = at;
+      line(to: at + Point(size.width, 0));
+      line(to: at + Point(size.width, size.height));
+      line(to: at + Point(0, size.height));
+      close();
     }
   }
 }
