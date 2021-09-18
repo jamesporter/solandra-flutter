@@ -70,7 +70,7 @@ class ExampleFive extends HookWidget {
     final parameter3 = useState<double>(2);
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Circular Animation")),
+      appBar: AppBar(title: const Text("(S)Path Operations")),
       body: Container(
           child: Column(children: [
         Row(
