@@ -1,6 +1,9 @@
 import 'dart:math';
 import 'dart:ui';
 
+// TODO I think just remove... adding some constructors to SPath which covers most of what might go here
+//for circles etc people can just use the built in Flutter canvas API/no point in doing stuff here
+
 /// Subclass this for when just wrapping some built in Canvas API
 abstract class Drawable {
   draw(Canvas canvas, Paint paint);

@@ -48,7 +48,7 @@ class ExampleSix extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Circular Animation")),
+        appBar: AppBar(title: const Text("Doodles")),
         body: CustomPaint(painter: ExampleSixPainter(), child: Container()));
   }
 }

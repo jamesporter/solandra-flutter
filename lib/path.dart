@@ -264,5 +264,63 @@ class SPath implements Drawable {
     return SPath.fromPoints(pts);
   }
 
-  // TODO fill out more from https://github.com/jamesporter/solandra/blob/master/src/lib/paths/Path.ts plus maybe some new things?
+  // Shapes
+
+  SPath.star(
+      {double? innerRadius,
+      required double radius,
+      required Point<double> at,
+      int n = 5,
+      double startAngle = 0}) {
+    var a = -pi / 2 + startAngle;
+    final iR = innerRadius ?? radius / 2;
+    final dA = (pi * 2) / n;
+    currentPoint = Point(at.x + radius * cos(a), at.y + radius * sin(a));
+    for (var i = 1; i < n; i++) {
+      line(
+          to: Point(at.x + iR * cos(a + (i - 0.5) * dA),
+              at.y + iR * sin(a + (i - 0.5) * dA)));
+      line(
+          to: Point(at.x + radius * cos(a + i * dA),
+              at.y + radius * sin(a + i * dA)));
+    }
+    line(
+        to: Point(
+            at.x + iR * cos(a - 0.5 * dA), at.y + iR * sin(a - 0.5 * dA)));
+    close();
+  }
+
+  SPath.regularPolygon(
+      {required double radius,
+      required Point<double> at,
+      int n = 5,
+      double startAngle = 0}) {
+    var a = -pi / 2 + startAngle;
+    final dA = (pi * 2) / n;
+    currentPoint = Point(at.x + radius * cos(a), at.y + radius * sin(a));
+    for (var i = 1; i < n; i++) {
+      line(
+          to: Point(at.x + radius * cos(a + i * dA),
+              at.y + radius * sin(a + i * dA)));
+    }
+    close();
+  }
+
+  SPath.spiral(
+      {required Point<double> at,
+      required int n,
+      required double l,
+      startAngle = 0,
+      double rate = 20}) {
+    var a = startAngle;
+    var r = l;
+
+    currentPoint = at + Point(r * cos(a), r * sin(a));
+    for (var i = 0; i < n; i++) {
+      final dA = 2 * asin(l / (r * 2));
+      r += rate * dA;
+      a += dA;
+      line(to: at + Point(r * cos(a), r * sin(a)));
+    }
+  }
 }
