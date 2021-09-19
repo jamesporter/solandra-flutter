@@ -1,11 +1,4 @@
-import 'package:example/hello_solandra.dart';
-import 'package:example/hello_solandra_five.dart';
-import 'package:example/hello_solandra_four.dart';
-import 'package:example/hello_solandra_seven.dart';
-import 'package:example/hello_solandra_six.dart';
-import 'package:example/hello_solandra_three.dart';
-import 'package:example/hello_solandra_two.dart';
-import 'package:example/home_screen.dart';
+import 'package:example/examples.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -33,16 +26,7 @@ class MyApp extends StatelessWidget {
               TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
             },
           )),
-      routes: {
-        "/": (_) => HomeScreen(),
-        "/1": (_) => ExampleOne(),
-        "/2": (_) => ExampleTwo(),
-        "/3": (_) => ExampleThree(),
-        "/4": (_) => ExampleFour(),
-        "/5": (_) => ExampleFive(),
-        "/6": (_) => ExampleSix(),
-        "/7": (_) => ExampleSeven()
-      },
+      routes: routes(),
       // showPerformanceOverlay: true,
       debugShowCheckedModeBanner: false,
     );

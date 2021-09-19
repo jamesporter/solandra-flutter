@@ -7,7 +7,8 @@ import 'package:solandra/path.dart';
 import 'package:solandra/solandra.dart';
 
 class ExampleSixPainter extends CustomPainter {
-  ExampleSixPainter();
+  bool square;
+  ExampleSixPainter(this.square);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -18,7 +19,7 @@ class ExampleSixPainter extends CustomPainter {
     sol.forTiling(
         n: 5,
         margin: 0.1,
-        square: false,
+        square: square,
         callback: (area) {
           final path = SPath(sol.center);
 
@@ -26,11 +27,15 @@ class ExampleSixPainter extends CustomPainter {
             path.line(to: sol.randomPoint());
           });
 
-          final curve = path
-              .scaled(area.delta.width / size.width)
-              .moved(sol.center - area.center)
-              .chaikin(n: 3);
           sol.setFillColor(150 + area.index * 5, 80, 70, 20);
+
+          sol.fill(SPath.rect(at: area.center, size: area.delta, centered: true)
+              .scaled(0.9, about: area.center));
+          final curve = path
+              .scaled(area.delta.width / size.width, about: sol.center)
+              .moved(area.center - sol.center)
+              .chaikin(n: 3);
+
           sol.fill(curve);
           sol.draw(curve);
         });
@@ -42,11 +47,21 @@ class ExampleSixPainter extends CustomPainter {
   }
 }
 
-class ExampleSix extends StatelessWidget {
+class ExampleSix extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final square = useState(false);
+
     return Scaffold(
-        appBar: AppBar(title: const Text("Doodles")),
-        body: CustomPaint(painter: ExampleSixPainter(), child: Container()));
+      appBar: AppBar(title: const Text("Doodles")),
+      body: CustomPaint(
+          painter: ExampleSixPainter(square.value), child: Container()),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.crop_square_sharp),
+        onPressed: () {
+          square.value = !square.value;
+        },
+      ),
+    );
   }
 }

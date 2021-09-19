@@ -104,7 +104,7 @@ class CubicEdge extends PathEdge {
 }
 
 /// A higher level Path class; allows both building and manipulation of paths, prior to drawing
-class SPath implements Drawable {
+class SPath {
   List<PathEdge> edges = <PathEdge>[];
   late Point<double> currentPoint;
 
@@ -173,8 +173,8 @@ class SPath implements Drawable {
     return transformed((p) => p + by);
   }
 
-  SPath scaled(double scale) {
-    final c = centroid;
+  SPath scaled(double scale, {Point<double>? about}) {
+    final c = about ?? centroid;
     return transformed((pt) => c + (pt - c) * scale);
   }
 

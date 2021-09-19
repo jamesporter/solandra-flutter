@@ -265,7 +265,8 @@ class Solandra {
 
   /// Give a bunch of cases, do one with probabilty in proportion to proportion given.
   ///
-  /// NB this is unlikely to be the most efficient way to do this when you iterate over it many times
+  /// NB this is unlikely to be the most efficient way to do this when you iterate over it many times as there is some setup cost
+  /// but you should be easily able to rewrite if necessary, calling `random()` directly.
   proportionately(List<Case> cases) {
     final total = cases
         .map((c) => c.proportion)

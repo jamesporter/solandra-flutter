@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'examples.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final names = routeNames();
+
     return Scaffold(
         appBar: AppBar(
           title: const Text("Solandra Examples"),
@@ -20,8 +23,8 @@ class HomeScreen extends StatelessWidget {
                   },
                   child: Padding(
                       padding: const EdgeInsets.all(16),
-                      child: Text("Example ${idx + 1}")));
-            }, childCount: 7))
+                      child: Text(names[idx])));
+            }, childCount: examplesCount))
           ],
         ));
   }
