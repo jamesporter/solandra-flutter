@@ -24,7 +24,7 @@ In `./example` or just look at the: [live web version](https://solandra-flutter.
 
 ## Getting started
 
-Install the `solandra` package in usual way. For Flutter.
+Install the `solandra` package in usual way, see [Solandra package details](https://pub.dev/packages/solandra). For Flutter.
 
 ## Usage
 
