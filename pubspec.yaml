@@ -1,7 +1,8 @@
 name: solandra
 description: Make drawing with Flutter concise, powerful and easy
 version: 0.0.1
-homepage:
+homepage: https://solandra.netlify.app/
+repository: https://github.com/jamesporter/solandra-flutter
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
