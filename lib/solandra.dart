@@ -161,6 +161,7 @@ class Solandra {
     }
   }
 
+  /// Iteration over an integer grid
   forGrid(
       {int minX = 0,
       required int maxX,
@@ -186,6 +187,7 @@ class Solandra {
     }
   }
 
+  /// Defaults to rotating around center of Canvas
   aroundCircle(
       {Point<double>? at,
       required double radius,
@@ -263,7 +265,7 @@ class Solandra {
     if (random() < proportion) callback();
   }
 
-  /// Give a bunch of cases, do one with probabilty in proportion to proportion given.
+  /// Give a bunch of cases, do one with probability in proportion to proportion given.
   ///
   /// NB this is unlikely to be the most efficient way to do this when you iterate over it many times as there is some setup cost
   /// but you should be easily able to rewrite if necessary, calling `random()` directly.
