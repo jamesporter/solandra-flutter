@@ -6,6 +6,7 @@ import 'package:example/hello_solandra_six.dart';
 import 'package:example/hello_solandra_three.dart';
 import 'package:example/hello_solandra_two.dart';
 import 'package:example/home_screen.dart';
+import 'package:example/wallpaper_creator.dart';
 import 'package:flutter/material.dart';
 
 final Map<String, Widget Function(BuildContext ctx)> examples = {
@@ -15,7 +16,8 @@ final Map<String, Widget Function(BuildContext ctx)> examples = {
   "Circular Animation": (_) => ExampleFour(),
   "(S)Path Operations": (_) => ExampleFive(),
   "Doodles": (_) => ExampleSix(),
-  "Fancier Shapes": (_) => ExampleSeven()
+  "Fancier Shapes": (_) => ExampleSeven(),
+  "Wallpaper Creator": (_) => WallpaperCreator()
 };
 
 Map<String, Widget Function(BuildContext ctx)> routes() {
