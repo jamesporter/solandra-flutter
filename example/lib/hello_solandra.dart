@@ -138,6 +138,34 @@ class ExampleOne extends HookWidget {
                     sd: size.magnitude * 0.03, mean: size.magnitude * 0.05))
             .rotate(sol.gaussian(sd: pi / 32))));
       });
+    },
+    (canvas, size) {
+      final sol = Solandra(canvas, size);
+      sol.clipped();
+      sol.background(180, 12, 91);
+
+      List<SPath> shapes = [];
+
+      sol.setFillColor(170, 10, 80);
+      SPath.star(at: sol.center, radius: size.magnitude * 0.25, n: 16)
+          .exploded(magnitude: 1.05, scale: 0.9)
+          .expand((p) => p.exploded(magnitude: 1.2, scale: 1.1))
+          .map((p) => p.rotated(sol.gaussian(sd: pi / 8)))
+          .forEachIndexed((index, p) {
+        sol.fill(p);
+        sol.draw(p);
+        shapes.add(p);
+      });
+
+      sol.strokePaint.strokeWidth = size.magnitude * 0.001;
+      shapes.forEachIndexed((index, element) {
+        sol.setFillColor(115.0 - index * 2, 90, 40, 80);
+        sol.fill(element.moved(Point(
+                0,
+                sol.gaussian(
+                    sd: size.magnitude * 0.01, mean: size.magnitude * 0.03))
+            .rotate(sol.gaussian(sd: pi / 16))));
+      });
     }
   ];
 }
