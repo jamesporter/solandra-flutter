@@ -120,12 +120,12 @@ class SPath {
     }
   }
 
-  line({required Point<double> to}) {
+  void line({required Point<double> to}) {
     edges.add(LineEdge(currentPoint, to));
     currentPoint = to;
   }
 
-  curve({
+  void curve({
     required Point<double> to,
     bool positive = true,
     double curveSize = 1,
@@ -144,7 +144,7 @@ class SPath {
     currentPoint = to;
   }
 
-  close() {
+  void close() {
     if (edges.isEmpty) throw Exception("Must have at least one point to close");
     line(to: edges[0].start);
   }
@@ -183,8 +183,7 @@ class SPath {
     return transformed((pt) => c + (pt - c).rotate(angle));
   }
 
-  @override
-  draw(Canvas canvas, Paint paint) {
+  void draw(Canvas canvas, Paint paint) {
     canvas.drawPath(path, paint);
   }
 
@@ -234,8 +233,9 @@ class SPath {
   /// If the path forms a look you probably want to opt in to the looped option.
   SPath chaikin({int n = 1, bool looped = false}) {
     var pts = points;
-    if (pts.length < 3)
+    if (pts.length < 3) {
       throw new Exception("Must have at least 3 points to perform this");
+    }
     List<Point<double>> newPts = [];
     for (var i = 0; i < n; i++) {
       if (!looped) {

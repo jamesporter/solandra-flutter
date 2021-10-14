@@ -26,6 +26,8 @@ class Solandra {
     ..color = const Color.fromARGB(255, 32, 32, 32)
     ..style = PaintingStyle.fill;
 
+  final c = Color.getAlphaFromOpacity(1);
+
   Paint strokePaint = Paint()
     ..color = const Color.fromARGB(255, 0, 0, 0)
     ..style = PaintingStyle.stroke;
@@ -45,40 +47,40 @@ class Solandra {
   double get height => size.height;
   Point<double> get center => Point(size.width / 2, size.height / 2);
 
-  drawPath(Path path) {
+  void drawPath(Path path) {
     canvas.drawPath(path, strokePaint);
   }
 
-  fillPath(Path path) {
+  void fillPath(Path path) {
     canvas.drawPath(path, fillPaint);
   }
 
-  draw(SPath path) {
+  void draw(SPath path) {
     path.draw(canvas, strokePaint);
   }
 
-  fill(SPath path) {
+  void fill(SPath path) {
     path.draw(canvas, fillPaint);
   }
 
-  background(double h, double s, double l, [double a = 100]) {
+  void background(double h, double s, double l, [double a = 100]) {
     Paint paint = Paint()
       ..color = fromHSLA(h, s, l, a)
       ..style = PaintingStyle.fill;
     canvas.drawRect(size.rect, paint);
   }
 
-  setFillColor(double h, double s, double l, [double a = 100]) {
+  void setFillColor(double h, double s, double l, [double a = 100]) {
     fillPaint.color = fromHSLA(h, s, l, a);
   }
 
-  setStrokeColor(double h, double s, double l, [double a = 1.0]) {
+  void setStrokeColor(double h, double s, double l, [double a = 1.0]) {
     strokePaint.color = fromHSLA(h, s, l, a);
   }
 
   // Canvas aware Iteration
 
-  forFrame({required Function(Area area) callback, double? margin}) {
+  void forFrame({required Function(Area area) callback, double? margin}) {
     if (margin != null) {
       forTiling(n: 1, square: false, callback: callback);
     } else {
@@ -87,7 +89,7 @@ class Solandra {
     }
   }
 
-  forTiling(
+  void forTiling(
       {required int n,
       bool square = true,
       double margin = 0,
@@ -162,7 +164,7 @@ class Solandra {
   }
 
   /// Iteration over an integer grid
-  forGrid(
+  void forGrid(
       {int minX = 0,
       required int maxX,
       int minY = 0,
@@ -188,7 +190,7 @@ class Solandra {
   }
 
   /// Defaults to rotating around center of Canvas
-  aroundCircle(
+  void aroundCircle(
       {Point<double>? at,
       required double radius,
       required int n,
@@ -261,7 +263,7 @@ class Solandra {
     return result;
   }
 
-  doProportion(double proportion, Function() callback) {
+  void doProportion(double proportion, Function() callback) {
     if (random() < proportion) callback();
   }
 
@@ -269,7 +271,7 @@ class Solandra {
   ///
   /// NB this is unlikely to be the most efficient way to do this when you iterate over it many times as there is some setup cost
   /// but you should be easily able to rewrite if necessary, calling `random()` directly.
-  proportionately(List<Case> cases) {
+  void proportionately(List<Case> cases) {
     final total = cases
         .map((c) => c.proportion)
         .reduce((value, element) => value + element);

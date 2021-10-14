@@ -51,7 +51,7 @@ void main() {
   });
 
   test('convenience functionality for Iterable<Point<double>>', () {
-    final items = [Point(2.0, 2.0), Point(4.0, 1.0), Point(-0.3, -0.4)];
+    const items = [Point(2.0, 2.0), Point(4.0, 1.0), Point(-0.3, -0.4)];
     final c = items.centroid;
     expect(c.x, closeTo(1.9, 0.01));
     expect(c.y, closeTo(0.86667, 0.01));

@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+// Not a natural way to do this see https://github.com/dart-lang/language/issues/723 (proposal to add static methods to extensions)
+
 /// Creates a Color from HSL Conversion formula
 /// adapted from http://en.wikipedia.org/wiki/HSV_color_space.
 /// Assumes h in [0, 360]
