@@ -31,7 +31,7 @@ extension PointHelpersD on Point<double> {
 
 extension CentroidCalc on Iterable<Point<double>> {
   Point<double> get centroid {
-    Point<double> p = Point<double>(0, 0);
+    Point<double> p = const Point<double>(0, 0);
     for (final el in this) {
       p += el;
     }

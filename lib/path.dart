@@ -33,7 +33,7 @@ class LineEdge extends PathEdge {
   }
 
   @override
-  PathEdge copy() => LineEdge(this.from, this.to);
+  PathEdge copy() => LineEdge(from, to);
 }
 
 class CubicEdge extends PathEdge {
@@ -234,7 +234,7 @@ class SPath {
   SPath chaikin({int n = 1, bool looped = false}) {
     var pts = points;
     if (pts.length < 3) {
-      throw new Exception("Must have at least 3 points to perform this");
+      throw Exception("Must have at least 3 points to perform this");
     }
     List<Point<double>> newPts = [];
     for (var i = 0; i < n; i++) {
@@ -258,7 +258,7 @@ class SPath {
       pts = newPts;
       newPts = [];
     }
-    // TODO in the JS version I did some extra slice thing at end... this was very fiddly
+    // In the JS version I did some extra slice thing at end... this was very fiddly, not doing yet
     return SPath.fromPoints(pts);
   }
 

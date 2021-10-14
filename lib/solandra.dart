@@ -281,13 +281,14 @@ class Solandra {
 
     for (var i = 0; i < cases.length; i++) {
       if (cases[i].proportion > r) {
-        return cases[i].callback();
+        cases[i].callback();
+        return;
       } else {
         r -= cases[i].proportion;
       }
     }
     //fallback *should never happen!*
-    return cases[0].callback();
+    cases[0].callback();
   }
 
   Point<double> perturb(
