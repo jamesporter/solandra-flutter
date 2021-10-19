@@ -133,7 +133,7 @@ class ExampleOne extends HookWidget {
       sol.strokePaint.strokeWidth = size.magnitude * 0.001;
       shapes.forEach((element) {
         sol.draw(element.moved(Point(
-                0,
+                0.0,
                 sol.gaussian(
                     sd: size.magnitude * 0.03, mean: size.magnitude * 0.05))
             .rotate(sol.gaussian(sd: pi / 32))));
@@ -161,7 +161,7 @@ class ExampleOne extends HookWidget {
       shapes.forEachIndexed((index, element) {
         sol.setFillColor(115.0 - index * 2, 90, 40, 80);
         sol.fill(element.moved(Point(
-                0,
+                0.0,
                 sol.gaussian(
                     sd: size.magnitude * 0.01, mean: size.magnitude * 0.03))
             .rotate(sol.gaussian(sd: pi / 16))));
