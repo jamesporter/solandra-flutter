@@ -19,6 +19,7 @@ export 'util/convenience.dart';
 // Exported, though not used in this file
 export 'iteration.dart';
 
+/// The main class for Solandra. Contains some state such as random number seed and some Paints
 class Solandra {
   Canvas canvas;
   Size size;
@@ -38,31 +39,44 @@ class Solandra {
     _rng = Random(seed);
   }
 
+  /// Clip your drawing to the Canvas size
   clipped() {
     canvas.clipRect(size.rect);
   }
 
+  /// Canvas aspect ratio
   double get aspectRatio => size.width / size.height;
+
+  /// Canvas width
   double get width => size.width;
+
+  /// Canvas height
   double get height => size.height;
+
+  /// Center of Canvas
   Point<double> get center => Point(size.width / 2, size.height / 2);
 
+  /// Draw (stroke) a conventional Dart Path with the current strokePaint
   void drawPath(Path path) {
     canvas.drawPath(path, strokePaint);
   }
 
+  /// Fill a conventional Dart Path with the current fillPaint
   void fillPath(Path path) {
     canvas.drawPath(path, fillPaint);
   }
 
+  /// Draw a Solandra SPath (shape/path) with the current strokePaint
   void draw(SPath path) {
     path.draw(canvas, strokePaint);
   }
 
+  /// Fill a Solandra SPath (shape/path) with the current fillPaint
   void fill(SPath path) {
     path.draw(canvas, fillPaint);
   }
 
+  /// Fill the background. Color is hsl(a), h goes from 0 to 360, others from 0 to 100.
   void background(double h, double s, double l, [double a = 100]) {
     Paint paint = Paint()
       ..color = fromHSLA(h, s, l, a)
@@ -70,16 +84,19 @@ class Solandra {
     canvas.drawRect(size.rect, paint);
   }
 
+  /// Set the color for fillPaint. Color is hsl(a), h goes from 0 to 360, others from 0 to 100.
   void setFillColor(double h, double s, double l, [double a = 100]) {
     fillPaint.color = fromHSLA(h, s, l, a);
   }
 
+  /// Set the color for strokePaint. Color is hsl(a), h goes from 0 to 360, others from 0 to 100.
   void setStrokeColor(double h, double s, double l, [double a = 1.0]) {
     strokePaint.color = fromHSLA(h, s, l, a);
   }
 
   // Canvas aware Iteration
 
+  /// Get a drawable Area for painting after adding a margin (proportionate)
   void forFrame({required Function(Area area) callback, double? margin}) {
     if (margin != null) {
       forTiling(n: 1, square: false, callback: callback);
@@ -89,6 +106,7 @@ class Solandra {
     }
   }
 
+  /// Helper for tiling a canvas
   void forTiling(
       {required int n,
       bool square = true,
@@ -131,6 +149,7 @@ class Solandra {
     }
   }
 
+  /// Go across canvas in chunks, with optional margin
   void forHorizontal(
       {required int n,
       double margin = 0.0,
@@ -147,6 +166,7 @@ class Solandra {
     }
   }
 
+  /// Go down canvas in chunks, with optional margin
   void forVertical(
       {required int n,
       double margin = 0.0,
@@ -207,32 +227,39 @@ class Solandra {
 
   // RNG
 
+  /// Set the RNG seed
   set seed(int newSeed) {
     _rng = Random(newSeed);
   }
 
+  /// Get a random point on the canvas
   Point<double> randomPoint() {
     return Point(
         _rng.nextDouble() * size.width, _rng.nextDouble() * size.height);
   }
 
+  /// Get a random angle
   double randomAngle() {
     return _rng.nextDouble() * pi * 2;
   }
 
-  // Want to be able to use same seed for standard operations (so duplicating out of box stuff)
+  /// Get a random number
   double random() {
+    // Want to be able to use same seed for standard operations (so duplicating out of box stuff)
     return _rng.nextDouble();
   }
 
+  /// Get a random integer
   int randomInt(int max) {
     return _rng.nextInt(max);
   }
 
+  /// Get a random boolean
   bool randomBool() {
     return _rng.nextBool();
   }
 
+  /// Get a random Gaussian value
   double gaussian({double mean = 0, double sd = 1}) {
     final a = _rng.nextDouble();
     final b = _rng.nextDouble();
@@ -240,6 +267,7 @@ class Solandra {
     return mean + n * sd;
   }
 
+  /// Get a random Poisson value
   int poisson(int lambda) {
     final limit = exp(-lambda);
     double prod = _rng.nextDouble();
@@ -251,10 +279,12 @@ class Solandra {
     return n;
   }
 
+  /// Pick an item from a list at random
   T sample<T>(List<T> items) {
     return items[randomInt(items.length)];
   }
 
+  /// Pick many items from a list at random (with replacement)
   List<T> samples<T>(List<T> items, int count) {
     List<T> result = <T>[];
     for (int i = 0; i < count; i++) {
@@ -263,6 +293,7 @@ class Solandra {
     return result;
   }
 
+  /// Do the callback a proportion of times
   void doProportion(double proportion, Function() callback) {
     if (random() < proportion) callback();
   }
@@ -291,6 +322,7 @@ class Solandra {
     cases[0].callback();
   }
 
+  /// Perturb a point (by uniform amount in 2D)
   Point<double> perturb(
       {required Point<double> at, required double magnitude}) {
     return Point(

@@ -1,6 +1,6 @@
 name: solandra
-description: Make drawing with Flutter concise, powerful and easy
-version: 0.0.2
+description: Make drawing with Flutter concise, powerful and easy. 2D creative code/algorithmic art framework with helpers for creating shapes, iteration, (pseudo)randomness and more.
+version: 0.0.3
 homepage: https://solandra.netlify.app/
 repository: https://github.com/jamesporter/solandra-flutter
 

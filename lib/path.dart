@@ -2,14 +2,25 @@ import 'dart:math';
 import 'dart:ui';
 import 'util/convenience.dart';
 
+/// Have lines or bezier curves, hence this parent class
 abstract class PathEdge {
+  /// Add to a (standard) Path; for drawing
   void addToPath(Path path);
+
+  /// Transform an edge with a function (on Point<double>)
   PathEdge transformed(Point<double> Function(Point<double>) transform);
+
+  /// Start of edge
   Point<double> get start;
+
+  /// End of edge
   Point<double> get end;
+
+  /// Make a copy, want to ensure immutability in some places
   PathEdge copy();
 }
 
+/// A line part of a path
 class LineEdge extends PathEdge {
   Point<double> from;
   Point<double> to;
@@ -36,6 +47,7 @@ class LineEdge extends PathEdge {
   PathEdge copy() => LineEdge(from, to);
 }
 
+/// Cubic bezier curve in path. Note that offers a novel API that is more human friendly: describe curve features in way that is invariant to size, rather than the standard control points (which are implicitly related to start and end points).
 class CubicEdge extends PathEdge {
   Point<double> from;
   Point<double> to;
@@ -112,6 +124,7 @@ class SPath {
     currentPoint = start;
   }
 
+  /// Conveniently construct from a List of Point<double>
   SPath.fromPoints(List<Point<double>> points) {
     if (points.isEmpty) throw Exception("Must supply at least one point");
     currentPoint = points.first;
@@ -120,11 +133,13 @@ class SPath {
     }
   }
 
+  /// Add a line to a point
   void line({required Point<double> to}) {
     edges.add(LineEdge(currentPoint, to));
     currentPoint = to;
   }
 
+  /// Add a curve to a point
   void curve({
     required Point<double> to,
     bool positive = true,
@@ -144,11 +159,13 @@ class SPath {
     currentPoint = to;
   }
 
+  /// Close a shape (add a line to the start)
   void close() {
     if (edges.isEmpty) throw Exception("Must have at least one point to close");
     line(to: edges[0].start);
   }
 
+  /// Get as a Path (for drawing in Flutter etc)
   Path get path {
     final path = Path();
     final start = edges[0].start;
@@ -159,6 +176,7 @@ class SPath {
     return path;
   }
 
+  /// Transform via transform on Point<double>
   SPath transformed(Point<double> Function(Point<double>) transform) {
     // hmm, this will work, but kind of don't like how exposing some implementation details
     final newPath = SPath(transform(currentPoint));
@@ -166,23 +184,30 @@ class SPath {
     return newPath;
   }
 
+  /// List of points. Loses details on curves
   List<Point<double>> get points => edges.map((e) => e.start).toList();
+
+  /// Centroid (average) point. Is often a good enough approximation for true centroid of a shape
   Point<double> get centroid => edges.map((e) => e.start).centroid;
 
+  /// Move the shape
   SPath moved(Point<double> by) {
     return transformed((p) => p + by);
   }
 
+  /// Scale the shape about its approximate centroid
   SPath scaled(double scale, {Point<double>? about}) {
     final c = about ?? centroid;
     return transformed((pt) => c + (pt - c) * scale);
   }
 
+  /// Rotate the shape about its approximate centroid
   SPath rotated(double angle) {
     final c = centroid;
     return transformed((pt) => c + (pt - c).rotate(angle));
   }
 
+  /// Draw the shape
   void draw(Canvas canvas, Paint paint) {
     canvas.drawPath(path, paint);
   }
@@ -264,6 +289,7 @@ class SPath {
 
   // Shapes
 
+  /// A star shape
   SPath.star(
       {double? innerRadius,
       required double radius,
@@ -288,6 +314,7 @@ class SPath {
     close();
   }
 
+  /// A regular polygon shape
   SPath.regularPolygon(
       {required double radius,
       required Point<double> at,
@@ -304,6 +331,7 @@ class SPath {
     close();
   }
 
+  /// A spiral shape made up of lines
   SPath.spiral(
       {required Point<double> at,
       required int n,
@@ -322,6 +350,7 @@ class SPath {
     }
   }
 
+  /// A rectangle shape
   SPath.rect(
       {required Point<double> at, required Size size, bool centered = false}) {
     if (centered) {
