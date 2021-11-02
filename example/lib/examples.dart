@@ -1,3 +1,4 @@
+import 'package:example/curves_demo.dart';
 import 'package:example/hello_solandra.dart';
 import 'package:example/hello_solandra_five.dart';
 import 'package:example/hello_solandra_four.dart';
@@ -17,7 +18,8 @@ final Map<String, Widget Function(BuildContext ctx)> examples = {
   "(S)Path Operations": (_) => ExampleFive(),
   "Doodles": (_) => ExampleSix(),
   "Fancier Shapes": (_) => ExampleSeven(),
-  "Wallpaper Creator": (_) => WallpaperCreator()
+  "Wallpaper Creator": (_) => WallpaperCreator(),
+  "Understanding Curves": (_) => CurvesDemoScreen()
 };
 
 Map<String, Widget Function(BuildContext ctx)> routes() {

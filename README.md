@@ -1,6 +1,6 @@
 Creating graphics with code is fun, but sometimes there is a lot of boilerplate. `Solandra` is a Flutter re-imagining of a [TypeScript library for HTML 5 Canvas drawing](https://solandra.netlify.app/).
 
-![Solandra created image example](./samples/1.png)
+![Solandra created image example](./sample-images/1.png)
 
 Flutter is a performant, multi platform framework with a great developer experience (for example supporting hot reload and declarative UI) but is often verbose. Paired with Solandra you can quickly create interesting, creative 2D graphics applications and deploy to native mobile apps, the web and native desktop apps.
 
@@ -20,7 +20,9 @@ Flutter is a performant, multi platform framework with a great developer experie
 
 Solandra emphasizes short (low boilerplate), clear and thus agile (changeable over time) code. It should allow you to be a lot more productive.
 
-![Solandra created image example](./samples/2.png)
+![Solandra created image example](./sample-images/2.png)
+
+![Solandra MacOS App Sample](./sample-images/solandra-flutter-mac-sample.png)
 
 ## Demo App
 
