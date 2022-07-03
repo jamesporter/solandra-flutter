@@ -1,3 +1,4 @@
+import 'package:example/convenient_painting.dart';
 import 'package:example/curves_demo.dart';
 import 'package:example/hello_solandra.dart';
 import 'package:example/hello_solandra_five.dart';
@@ -19,7 +20,9 @@ final Map<String, Widget Function(BuildContext ctx)> examples = {
   "Doodles": (_) => ExampleSix(),
   "Fancier Shapes": (_) => ExampleSeven(),
   "Wallpaper Creator": (_) => WallpaperCreator(),
-  "Understanding Curves": (_) => CurvesDemoScreen()
+  "Understanding Curves": (_) => CurvesDemoScreen(),
+  "Convenient Painting": (_) => ConvenientPainting(),
+  "(More) Convenient Painting": (_) => ConvenientPainting2()
 };
 
 Map<String, Widget Function(BuildContext ctx)> routes() {
