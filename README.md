@@ -24,6 +24,34 @@ Solandra emphasizes short (low boilerplate), clear and thus agile (changeable ov
 
 ![Solandra MacOS App Sample](./sample-images/solandra-flutter-mac-sample.png)
 
+## Release Notes
+
+### 0.0.4
+
+#### More convenient drawing
+
+Flutter tends to encourage boilerplate 😞, but certainly does not require it. Now you can render some custom drawing in one line of code with the new `SolandraSimplePaintingWidget`:
+
+```dart
+SolandraSimplePaintingWidget(draw: (s) {
+  s.background(200, 60, 40);
+})
+```
+
+This will expand to take all available space, setting up all the usual custom painter and related widget boilerplate. The `ConvenientPainting2` example shows how if you have some associated state you can capture (for example by defining the drawing function in the `build` method).
+
+#### Easy offscreen rendering
+
+Often with creative coding you will want an easy way to render images (to save to a file). Solandra now makes this easy:
+
+```dart
+SolandraRenderer.render((s) {
+  s.background(200, 60, 40);
+})
+```
+
+You'll notice you can use the same function to render to a file or to a canvas.
+
 ## Demo App
 
 In `./example` or just look at the: [live web version](https://solandra-flutter.netlify.app).
@@ -130,7 +158,7 @@ Most of these are obvious. The `clipped` method clips drawing to the `Canvas` (i
 
 The library is much simpler in general, as Dart has a lot more built in functionality for mathematics e.g. `Point`, `Size` classes and so on.
 
-Unlike the original TypeScript version there is explicit support for time (you are expected to use Flutter's existing animation tools for that).
+Unlike the original TypeScript version there is no explicit support for time (you are expected to use Flutter's existing animation tools for that).
 
 ## Dart/Flutter Tips
 

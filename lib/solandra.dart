@@ -19,6 +19,9 @@ export 'util/convenience.dart';
 // Exported, though not used in this file
 export 'iteration.dart';
 
+export 'solandra_canvas.dart';
+export 'solandra_renderer.dart';
+
 /// The main class for Solandra. Contains some state such as random number seed and some Paints
 class Solandra {
   Canvas canvas;

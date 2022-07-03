@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:solandra/iteration.dart';
 import 'package:solandra/solandra.dart';
 import 'package:collection/collection.dart';
 
@@ -41,7 +40,7 @@ class ExampleOne extends HookWidget {
     );
   }
 
-  List<Function(Canvas, Size)> painters = [
+  final List<Function(Canvas, Size)> painters = [
     (canvas, size) {
       final sol = Solandra(canvas, size);
       sol.clipped();
